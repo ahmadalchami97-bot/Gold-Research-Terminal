@@ -1,0 +1,86 @@
+[
+  {
+    "headline": "Gold holds near record as soft payrolls revive Fed rate-cut bets",
+    "source": "Reuters",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-10T20:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Dollar slips to two-month low, lifting gold and silver",
+    "source": "Bloomberg",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-09T19:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "10-year real yields ease as CPI undershoots expectations",
+    "source": "FXStreet",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-10T17:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Central banks added to gold reserves again last month, WGC says",
+    "source": "Kitco",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-08T23:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Hawkish Fed minutes lift the dollar; gold pares gains",
+    "source": "MarketWatch",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-08T00:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Treasury yields climb after strong jobless claims data",
+    "source": "CNBC",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-06T14:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Safe-haven bid returns on geopolitical tensions",
+    "source": "Reuters",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-09T14:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "ETF gold holdings rise for a third straight week",
+    "source": "Mining.com",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-08T13:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Stronger dollar caps bullion as traders trim cut odds",
+    "source": "Bloomberg",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-05T14:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Gold consolidates as markets await next inflation print",
+    "source": "FXStreet",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-10T23:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Rising real rates pressure non-yielding assets",
+    "source": "WSJ",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-04T21:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  },
+  {
+    "headline": "Silver outperforms gold; ratio narrows on industrial demand",
+    "source": "Kitco",
+    "url": "https://example.com/sample",
+    "published_at": "2026-06-07T23:00:00",
+    "summary": "Sample headline included with the offline snapshot."
+  }
+]

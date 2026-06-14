@@ -1,0 +1,23 @@
+# Institutional dark theme for the Gold Research Terminal.
+# Deep charcoal/navy canvas with a restrained gold accent — deliberately
+# not the default Streamlit look.
+
+[theme]
+base = "dark"
+primaryColor = "#C8A15A"            # restrained gold accent
+backgroundColor = "#0E1117"         # near-black charcoal canvas
+secondaryBackgroundColor = "#171B24" # panel / card surface
+textColor = "#E6E8EC"
+font = "sans serif"
+
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = true
+toolbarMode = "minimal"

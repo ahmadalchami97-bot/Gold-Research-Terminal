@@ -1,0 +1,9 @@
+{
+  "synthetic": true,
+  "seed": 20260614,
+  "start": "2018-01-01",
+  "end": "2026-06-12",
+  "rows": 2205,
+  "last_gold": 2965.0,
+  "note": "Synthetic sample snapshot. Drivers simulated; gold built as a documented linear response to drivers plus noise."
+}
