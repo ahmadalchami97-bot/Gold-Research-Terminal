@@ -1,7 +1,7 @@
 # Gold Research Terminal — runtime dependencies
 # Pinned to ranges that resolve to manylinux wheels on Streamlit Community Cloud.
 
-streamlit>=1.40,<2
+streamlit>=1.45,<2
 pandas>=2.1
 numpy>=1.26,<2.3
 scipy>=1.11
@@ -11,4 +11,4 @@ plotly>=5.20
 pyarrow>=15          # parquet snapshot I/O
 requests>=2.31
 anthropic>=0.40      # optional, grounded narrative layer
-fpdf2>=2.7           # pure-python PDF export (no system libraries required)
+# Research-note export is dependency-free HTML/Markdown (print-to-PDF in browser).

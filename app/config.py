@@ -11,9 +11,10 @@ import os
 from dataclasses import dataclass
 from functools import lru_cache
 
-# Default Anthropic model for the grounded narrative layer. Sonnet balances
-# cost/latency for institutional prose; override via ANTHROPIC_MODEL.
-DEFAULT_ANTHROPIC_MODEL = "claude-sonnet-4-6"
+# Default Anthropic model for the grounded narrative layer — the most capable
+# Claude model. Override via the ANTHROPIC_MODEL secret (e.g. a faster/cheaper
+# model) if cost or latency matters more than prose quality.
+DEFAULT_ANTHROPIC_MODEL = "claude-opus-4-8"
 
 
 def _get(key: str, default: str | None = None) -> str | None:
