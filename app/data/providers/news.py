@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from xml.etree import ElementTree as ET
 
-from app.data.providers.base import ProviderError, http_get, get_json
+from app.data.providers.base import ProviderError, get_json, http_get
 
 # Query-based feeds are the most robust keyless sources.
 RSS_FEEDS = [

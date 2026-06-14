@@ -7,7 +7,6 @@ import streamlit as st
 from app.ui import components as C
 from app.ui import plotly_template as P
 from app.ui.data import get_snapshot
-from app.ui.theme import PALETTE
 
 
 def render() -> None:

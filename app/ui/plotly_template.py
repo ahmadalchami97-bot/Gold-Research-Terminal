@@ -1,7 +1,6 @@
 """Institutional Plotly chart builders with one shared visual style."""
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
@@ -45,9 +44,11 @@ def price_chart(prices: pd.DataFrame, levels=None, bars: int = 320,
             ma = prices["close"].rolling(w).mean().iloc[-bars:]
             fig.add_trace(go.Scatter(x=df.index, y=ma, name=f"{w}DMA",
                                      line=dict(color=color, width=1.3)))
+    last_close = df["close"].iloc[-1]
     for lv in (levels or []):
         dash = "dot" if lv.kind in ("ma", "fib", "band") else "dash"
-        color = PALETTE["bear_soft"] if lv.kind == "resistance" or lv.price >= df["close"].iloc[-1] else PALETTE["bull_soft"]
+        above = lv.kind == "resistance" or lv.price >= last_close
+        color = PALETTE["bear_soft"] if above else PALETTE["bull_soft"]
         fig.add_hline(y=lv.price, line=dict(color=color, width=1, dash=dash),
                       annotation_text=lv.label, annotation_position="right",
                       annotation_font_size=9, annotation_font_color=PALETTE["muted"])

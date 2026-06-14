@@ -12,8 +12,7 @@ import numpy as np
 import pandas as pd
 
 from app.data.types import MarketData
-from app.engines.util import (TRADING_DAYS, annualize_vol, log_returns,
-                              percentile_of_last)
+from app.engines.util import TRADING_DAYS, annualize_vol, log_returns, percentile_of_last
 from app.schemas import RegimeChange, RegimeState
 
 

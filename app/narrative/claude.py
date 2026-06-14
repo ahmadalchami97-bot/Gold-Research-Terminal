@@ -11,8 +11,7 @@ import json
 
 from app.config import get_settings
 from app.engines import news as news_engine
-from app.schemas import (Classification, NarrativeBlock, NewsDigest, NewsItem,
-                         TerminalSnapshot)
+from app.schemas import Classification, NarrativeBlock, NewsDigest, NewsItem, TerminalSnapshot
 
 SYSTEM = (
     "You are a precise sell-side commodities research analyst writing for "

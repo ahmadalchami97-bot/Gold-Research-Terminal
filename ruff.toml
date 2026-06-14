@@ -1,0 +1,11 @@
+line-length = 120
+target-version = "py311"
+
+[lint]
+select = ["E", "F", "W", "I"]
+# E402: modules intentionally import after st.set_page_config / page-config side effects.
+# E741: short financial variable names (l for level, etc.) are idiomatic here.
+ignore = ["E402", "E741"]
+
+[lint.per-file-ignores]
+"app/schemas/__init__.py" = ["E501"]   # contract docstrings/comments may run long

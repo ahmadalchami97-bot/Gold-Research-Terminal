@@ -25,9 +25,18 @@ import numpy as np
 
 from app.data.types import MarketData
 from app.engines.util import HORIZON_DAYS, HORIZON_LABELS, TRADING_DAYS, clamp
-from app.schemas import (Confidence, Direction, DistributionResult, DriverModel,
-                         ConsensusSummary, HorizonOutlook, Invalidation,
-                         OutlookDashboard, RegimeState, RiskAssessment)
+from app.schemas import (
+    Confidence,
+    ConsensusSummary,
+    Direction,
+    DistributionResult,
+    DriverModel,
+    HorizonOutlook,
+    Invalidation,
+    OutlookDashboard,
+    RegimeState,
+    RiskAssessment,
+)
 
 # per-horizon blend weights: (momentum, medium-term trend, distribution tilt)
 WEIGHTS = {

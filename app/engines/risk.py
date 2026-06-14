@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 
 from app.data.types import MarketData
-from app.engines.util import (TRADING_DAYS, log_returns, percentile_of_last)
-from app.schemas import (Invalidation, RegimeState, RiskAssessment, RiskTrigger)
+from app.engines.util import TRADING_DAYS, log_returns, percentile_of_last
+from app.schemas import Invalidation, RegimeState, RiskAssessment, RiskTrigger
 
 
 def _var_cvar(ret: pd.Series, q: float) -> tuple[float, float]:

@@ -107,7 +107,7 @@ def build_html(snap: TerminalSnapshot, blocks: list[NarrativeBlock],
     def esc(t: str) -> str:
         return _h.escape(str(t))
 
-    out = [f"<!DOCTYPE html><html><head><meta charset='utf-8'>",
+    out = ["<!DOCTYPE html><html><head><meta charset='utf-8'>",
            f"<title>{esc(APP_NAME)} — Research Note</title><style>{_HTML_CSS}</style></head><body>",
            f"<h1>{esc(APP_NAME)} — Research Note</h1>",
            f"<div class='meta'>As of {snap.as_of.strftime('%Y-%m-%d')} · Data: {esc(mode)} · "

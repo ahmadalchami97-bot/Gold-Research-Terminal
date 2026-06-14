@@ -9,8 +9,7 @@ import numpy as np
 import pandas as pd
 
 from app.data.types import MarketData
-from app.engines.util import (TRADING_DAYS, annualize_vol, log_returns,
-                              pct_change_over, realized_vol)
+from app.engines.util import TRADING_DAYS, log_returns, pct_change_over, realized_vol
 from app.schemas import MarketState, MovingAverageStat, ReturnStat
 
 MA_WINDOWS = [20, 50, 100, 200]

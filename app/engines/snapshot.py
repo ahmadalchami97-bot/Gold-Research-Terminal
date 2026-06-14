@@ -8,10 +8,14 @@ figure in the terminal reconciles.
 from __future__ import annotations
 
 from app.data.types import MarketData
-from app.engines import (distribution as distribution_engine, drivers as drivers_engine,
-                         indicators as indicators_engine, levels as levels_engine,
-                         market_state as market_state_engine, outlook as outlook_engine,
-                         regime as regime_engine, risk as risk_engine)
+from app.engines import distribution as distribution_engine
+from app.engines import drivers as drivers_engine
+from app.engines import indicators as indicators_engine
+from app.engines import levels as levels_engine
+from app.engines import market_state as market_state_engine
+from app.engines import outlook as outlook_engine
+from app.engines import regime as regime_engine
+from app.engines import risk as risk_engine
 from app.schemas import TerminalSnapshot
 
 

@@ -1,0 +1,4 @@
+# Development / CI dependencies (not needed at runtime on Streamlit Cloud).
+-r requirements.txt
+pytest>=8.0
+ruff>=0.5

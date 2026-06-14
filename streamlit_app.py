@@ -14,8 +14,19 @@ from app.ui.theme import apply_page_config, inject_css
 apply_page_config()
 inject_css()
 
-from app.pages import (drivers, indicator_consensus, levels, market_state, news,  # noqa: E402
-                       outlook, overview, probability, regime, research_note, risk)
+from app.pages import (  # noqa: E402
+    drivers,
+    indicator_consensus,
+    levels,
+    market_state,
+    news,
+    outlook,
+    overview,
+    probability,
+    regime,
+    research_note,
+    risk,
+)
 
 
 def _sidebar() -> None:

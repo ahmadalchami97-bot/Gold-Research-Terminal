@@ -12,8 +12,7 @@ import numpy as np
 import pandas as pd
 
 from app.data.types import MarketData
-from app.schemas import (INDICATOR_SCORE, ConsensusSummary, IndicatorReading,
-                         IndicatorState)
+from app.schemas import INDICATOR_SCORE, ConsensusSummary, IndicatorReading, IndicatorState
 
 S = IndicatorState  # local alias
 

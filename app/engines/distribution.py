@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 from app.data.types import MarketData
-from app.engines.util import TRADING_DAYS, HORIZON_DAYS, clamp, log_returns
+from app.engines.util import HORIZON_DAYS, TRADING_DAYS, clamp, log_returns
 from app.schemas import DistributionResult, HorizonRange
 
 N_PER_METHOD = 6000           # paths per generator (x3 generators)
