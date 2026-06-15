@@ -82,8 +82,14 @@ Copy `.streamlit/secrets.toml.example` → `.streamlit/secrets.toml`:
    the repo/branch with main file `streamlit_app.py`.
 3. Add any secrets above in **Settings → Secrets** (TOML format, same keys as the
    example). All are optional.
-4. Deploy. Live data fetches at runtime; the bundled snapshot guarantees a
+4. (Optional) In **Advanced settings**, select Python 3.11, 3.12 or 3.13 — all are
+   supported. The app deliberately ships **no** `.python-version`/`runtime.txt` pin
+   so Streamlit Cloud installs `requirements.txt` into its own managed interpreter.
+5. Deploy. Live data fetches at runtime; the bundled snapshot guarantees a
    working first render even before keys are set.
+
+> If a redeploy ever shows a missing dependency, use **Manage app → Reboot**
+> (clear cache) so Cloud rebuilds the environment from `requirements.txt`.
 
 ## Develop
 
