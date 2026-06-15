@@ -12,7 +12,13 @@ import numpy as np
 import pandas as pd
 
 from app.data.types import MarketData
-from app.schemas import INDICATOR_SCORE, ConsensusSummary, IndicatorReading, IndicatorState
+from app.schemas import (
+    INDICATOR_SCORE,
+    ConsensusSummary,
+    IndicatorReading,
+    IndicatorState,
+    TimeframeConsensus,
+)
 
 S = IndicatorState  # local alias
 
@@ -274,10 +280,26 @@ def _label_from_score(score_0_100: float) -> str:
     return "Strongly Bearish"
 
 
-def compute(data: MarketData) -> ConsensusSummary:
-    prices = data.prices
-    close = data.close
+def bias3(score_0_100: float) -> str:
+    """Coarse 3-state bias for the timeframe consensus summary."""
+    if score_0_100 >= 60:
+        return "Bullish"
+    if score_0_100 <= 40:
+        return "Bearish"
+    return "Neutral"
 
+
+def _resample(prices: pd.DataFrame, rule: str) -> pd.DataFrame:
+    """Resample daily OHLCV to a coarser timeframe (e.g. weekly, monthly)."""
+    agg = {"open": "first", "high": "max", "low": "min", "close": "last",
+           "volume": "sum"}
+    cols = {k: v for k, v in agg.items() if k in prices.columns}
+    return prices.resample(rule).agg(cols).dropna(subset=["close"])
+
+
+def consensus_from_prices(prices: pd.DataFrame, timeframe: str = "Daily") -> ConsensusSummary:
+    """Classify the 14 indicators on one OHLCV frame (any timeframe)."""
+    close = prices["close"].dropna()
     specs = [
         ("RSI", "Momentum", ind_rsi(close)),
         ("MACD", "Momentum", ind_macd(close)),
@@ -311,15 +333,48 @@ def compute(data: MarketData) -> ConsensusSummary:
     neutral = counts[S.NEUTRAL.value]
 
     mean_score = float(np.mean([r.score for r in readings]))
-    inst_score = (mean_score + 2) / 4 * 100  # 0..100, 50 = neutral
+    inst_score = round((mean_score + 2) / 4 * 100, 1)  # 0..100, 50 = neutral
 
     return ConsensusSummary(
         as_of=close.index[-1].to_pydatetime(),
+        timeframe=timeframe,
         readings=readings,
         bullish_pct=round(bullish / n * 100, 1),
         neutral_pct=round(neutral / n * 100, 1),
         bearish_pct=round(bearish / n * 100, 1),
-        institutional_score=round(inst_score, 1),
+        institutional_score=inst_score,
         institutional_label=_label_from_score(inst_score),
+        bias=bias3(inst_score),
         counts=counts,
     )
+
+
+def compute(data: MarketData) -> ConsensusSummary:
+    """Daily consensus (kept for the overview, narrative and report)."""
+    return consensus_from_prices(data.prices, "Daily")
+
+
+def _alignment_note(daily: ConsensusSummary, weekly: ConsensusSummary,
+                    monthly: ConsensusSummary) -> str:
+    biases = {"Daily": daily.bias, "Weekly": weekly.bias, "Monthly": monthly.bias}
+    distinct = set(biases.values())
+    if len(distinct) == 1:
+        return f"All timeframes agree: {daily.bias.lower()}. Aligned outlook across horizons."
+    if daily.bias != monthly.bias and "Neutral" not in (daily.bias, monthly.bias):
+        return (f"Timeframes diverge: short-term (daily) is {daily.bias.lower()} while "
+                f"long-term (monthly) is {monthly.bias.lower()} — typically a "
+                f"counter-trend move within the larger trend. Expect the near-term "
+                f"horizon to lean {daily.bias.lower()} and the multi-month horizon "
+                f"to lean {monthly.bias.lower()}.")
+    parts = ", ".join(f"{k.lower()} {v.lower()}" for k, v in biases.items())
+    return f"Mixed across timeframes ({parts}); treat the signal as transitional."
+
+
+def compute_mtf(data: MarketData) -> TimeframeConsensus:
+    """Classify all 14 indicators on Daily, Weekly and Monthly timeframes."""
+    daily = consensus_from_prices(data.prices, "Daily")
+    weekly = consensus_from_prices(_resample(data.prices, "W-FRI"), "Weekly")
+    monthly = consensus_from_prices(_resample(data.prices, "ME"), "Monthly")
+    return TimeframeConsensus(
+        as_of=daily.as_of, daily=daily, weekly=weekly, monthly=monthly,
+        alignment=_alignment_note(daily, weekly, monthly))

@@ -21,13 +21,14 @@ from app.schemas import TerminalSnapshot
 
 def build_snapshot(data: MarketData, mc_seed: int = 20260614) -> TerminalSnapshot:
     market_state = market_state_engine.compute(data)
-    consensus = indicators_engine.compute(data)
+    consensus = indicators_engine.compute(data)            # daily
+    consensus_mtf = indicators_engine.compute_mtf(data)    # daily / weekly / monthly
     levels = levels_engine.compute(data)
     drivers = drivers_engine.compute(data)
     regime = regime_engine.compute(data)
     distribution = distribution_engine.compute(data, seed=mc_seed)
     risk = risk_engine.compute(data, regime=regime)
-    outlook = outlook_engine.compute(data, distribution, drivers, consensus, risk, regime)
+    outlook = outlook_engine.compute(data, distribution, drivers, consensus_mtf, risk, regime)
 
     return TerminalSnapshot(
         as_of=market_state.as_of,
@@ -39,5 +40,6 @@ def build_snapshot(data: MarketData, mc_seed: int = 20260614) -> TerminalSnapsho
         distribution=distribution,
         outlook=outlook,
         consensus=consensus,
+        consensus_mtf=consensus_mtf,
         risk=risk,
     )

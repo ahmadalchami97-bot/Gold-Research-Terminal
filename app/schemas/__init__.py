@@ -269,13 +269,29 @@ class IndicatorReading:
 @dataclass
 class ConsensusSummary:
     as_of: datetime
+    timeframe: str              # "Daily" | "Weekly" | "Monthly"
     readings: list[IndicatorReading]
     bullish_pct: float
     neutral_pct: float
     bearish_pct: float
     institutional_score: float  # 0..100 (50 = neutral)
     institutional_label: str    # Strongly Bearish .. Strongly Bullish
+    bias: str                   # 3-state: Bearish | Neutral | Bullish
     counts: dict[str, int]      # state -> count
+
+
+@dataclass
+class TimeframeConsensus:
+    """The 14 indicators classified across Daily / Weekly / Monthly timeframes."""
+    as_of: datetime
+    daily: ConsensusSummary
+    weekly: ConsensusSummary
+    monthly: ConsensusSummary
+    alignment: str              # human note on cross-timeframe alignment / divergence
+
+    @property
+    def frames(self) -> list[ConsensusSummary]:
+        return [self.daily, self.weekly, self.monthly]
 
 
 # --------------------------------------------------------------------------- #
@@ -353,5 +369,6 @@ class TerminalSnapshot:
     levels: LevelMap
     distribution: DistributionResult
     outlook: OutlookDashboard
-    consensus: ConsensusSummary
+    consensus: ConsensusSummary           # daily (kept for overview/narrative/report)
+    consensus_mtf: TimeframeConsensus     # daily / weekly / monthly matrix
     risk: RiskAssessment

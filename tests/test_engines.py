@@ -36,6 +36,19 @@ def test_consensus_matrix(data):
     assert sum(c.counts.values()) == 14
 
 
+# --- multi-timeframe consensus ---------------------------------------------
+def test_multi_timeframe_consensus(data):
+    mtf = indicators.compute_mtf(data)
+    for cs in (mtf.daily, mtf.weekly, mtf.monthly):
+        assert len(cs.readings) == 14
+        assert 0 <= cs.institutional_score <= 100
+        assert cs.bias in {"Bearish", "Neutral", "Bullish"}
+    assert mtf.daily.timeframe == "Daily"
+    assert mtf.weekly.timeframe == "Weekly"
+    assert mtf.monthly.timeframe == "Monthly"
+    assert mtf.alignment
+
+
 # --- drivers ---------------------------------------------------------------
 def test_drivers(data):
     d = drivers.compute(data)
@@ -89,7 +102,7 @@ def test_distribution_ranges(data):
 def test_outlook_coherence(data):
     dist = distribution.compute(data, seed=20260614, n_per_method=3000)
     drv = drivers.compute(data)
-    cons = indicators.compute(data)
+    cons = indicators.compute_mtf(data)
     reg = regime.compute(data)
     rk = risk.compute(data, regime=reg)
     o = outlook.compute(data, dist, drv, cons, rk, reg)

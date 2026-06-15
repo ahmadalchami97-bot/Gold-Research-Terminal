@@ -6,7 +6,7 @@ import html
 import streamlit as st
 
 from app.config import APP_NAME, APP_TAGLINE, DISCLAIMER
-from app.schemas import ConsensusSummary, DataProvenance
+from app.schemas import DataProvenance, TimeframeConsensus
 from app.ui.theme import PALETTE, STATE_COLORS, state_color
 
 
@@ -69,31 +69,36 @@ def metric_color(value: float) -> str:
     return PALETTE["bull"] if value > 0 else PALETTE["bear"] if value < 0 else PALETTE["muted"]
 
 
-def consensus_matrix(summary: ConsensusSummary) -> None:
-    """Render the Indicator × 5-state matrix with a marker in the active cell."""
-    states = ["Bearish", "Slightly Bearish", "Neutral", "Slightly Bullish", "Bullish"]
+def _state_cell(state_value: str) -> str:
+    color = STATE_COLORS.get(state_value, PALETTE["neutral"])
+    return (f'<td style="text-align:center;padding:5px 10px;white-space:nowrap">'
+            f'<span style="color:{color};font-weight:600;font-size:.8rem">'
+            f'&#9679; {html.escape(state_value)}</span></td>')
+
+
+def multi_timeframe_matrix(mtf: TimeframeConsensus) -> None:
+    """Render Indicator × {Daily, Weekly, Monthly} with a colored state per cell."""
+    frames = [("Daily", mtf.daily), ("Weekly", mtf.weekly), ("Monthly", mtf.monthly)]
+    per = {tf: {r.name: r for r in cs.readings} for tf, cs in frames}
+    names = [r.name for r in mtf.daily.readings]
+    category = {r.name: r.category for r in mtf.daily.readings}
+
     head = "".join(
-        f'<th style="padding:6px 8px;text-align:center;font-size:.72rem;'
-        f'color:{STATE_COLORS[s]};border-bottom:1px solid {PALETTE["border"]}">{s}</th>'
-        for s in states)
+        f'<th style="padding:6px 12px;text-align:center;font-size:.74rem;'
+        f'color:{PALETTE["gold"]};border-bottom:1px solid {PALETTE["border"]}">{tf}</th>'
+        for tf, _ in frames)
     rows = []
-    for r in summary.readings:
-        cells = []
-        for s in states:
-            if r.state.value == s:
-                dot = (f'<span style="color:{STATE_COLORS[s]};font-size:1.1rem">●</span>')
-            else:
-                dot = f'<span style="color:{PALETTE["grid"]}">·</span>'
-            cells.append(f'<td style="text-align:center;padding:5px 8px">{dot}</td>')
+    for name in names:
+        cells = "".join(_state_cell(per[tf][name].state.value) for tf, _ in frames)
         rows.append(
             f'<tr><td style="padding:5px 10px;white-space:nowrap">'
-            f'<span style="color:{PALETTE["text"]};font-weight:600">{html.escape(r.name)}</span>'
-            f'<span style="color:{PALETTE["muted"]};font-size:.74rem"> · {html.escape(r.category)}'
-            f' · {html.escape(r.value)}</span></td>{"".join(cells)}</tr>')
+            f'<span style="color:{PALETTE["text"]};font-weight:600">{html.escape(name)}</span>'
+            f'<span style="color:{PALETTE["muted"]};font-size:.72rem"> · {html.escape(category[name])}'
+            f'</span></td>{cells}</tr>')
     table = (
         f'<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;'
         f'background:{PALETTE["panel"]};border:1px solid {PALETTE["border"]};border-radius:8px">'
-        f'<thead><tr><th style="text-align:left;padding:6px 10px;font-size:.72rem;'
+        f'<thead><tr><th style="text-align:left;padding:6px 10px;font-size:.74rem;'
         f'color:{PALETTE["muted"]};border-bottom:1px solid {PALETTE["border"]}">Indicator</th>'
         f'{head}</tr></thead><tbody>{"".join(rows)}</tbody></table></div>')
     st.markdown(table, unsafe_allow_html=True)

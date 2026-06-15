@@ -51,7 +51,9 @@ def _chart(symbol: str, rng: str = "10y", interval: str = "1d",
     return frame
 
 
-def fetch_gold_ohlcv(rng: str = "10y", timeout: int = 12) -> pd.DataFrame:
+def fetch_gold_ohlcv(rng: str = "max", timeout: int = 12) -> pd.DataFrame:
+    # "max" history so the weekly/monthly indicator matrix has enough bars
+    # (e.g. a 200-period monthly EMA needs ~17 years of data).
     return _chart("GC=F", rng=rng, timeout=timeout)
 
 
